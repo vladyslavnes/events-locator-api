@@ -3,43 +3,40 @@ const Event = require('../models/event')
 const events = express.Router()
 
 events.post('/events', (req, res, next) => {
-  if (req.body) {
-    new Event({
-      ...req.body,
-      subscribers: [req.body.createdBy],
-    })
-      .save()
-      .then(event => {
-        res.json(req)
-      })
-      .catch(err => console.error(err))
-  } else {
-    res.end('specify data')
-  }
+  console.log('BEHOLD, HE COMES RIDING ON A CLOWD!')
+  new Event({
+    ...req.body,
+    subscribers: [req.body.createdBy],
+    hash: req.body.name.toLowerCase().replace(/\s/g, '-').replace(/\W/g, '')
+  }).save().then(event => {
+    res.json({event})
+    res.end()
+    console.log('NP is in P!')
+  }).catch(next)
 })
 
 events.get('/events', (req, res, next) => {
  Event.find({})
    .then(events => {
-     res.json(events)
+     res.json({events})
    })
    .catch(next)
 })
 
-events.put('/events/:id/subscribe', (req, res, next) => {
-  Event.findOneAndUpdate(
-    {_id: req.params.id},
-    {...req.body}
+events.put('/events/:hash/subscribe', (req, res, next) => {
+  Event.update(
+    {hash: req.params.hash},
+    {$addToSet: {"subscribers": req.body.user}}
   )
     .then(event => {
-      console.log('PUT request', events)
+      console.log('PUT request', event)
       res.json({event})
     })
     .catch(next)
 })
 
-events.delete('/events/:id', (req, res, next) => {
-  Event.findByIdAndRemove(req.params.id)
+events.delete('/events/:hash', (req, res, next) => {
+  Event.findOneAndRemove({hash: req.params.hash})
     .then(event => {
       res.json({event})
     })

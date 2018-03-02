@@ -13,15 +13,26 @@ require('./db')
 
 // Start listening to requests
 app.listen(config.port, () => {
-  console.log(`Do things that scare you. Server running at port: ${config.port}`)
+  console.log(`Take things easier. Server running at port: ${config.port}`)
 })
 
-// added for development
+
+// Enable CORS
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// Ignore favicon request error
+
 app.get('/favicon.ico', function(req, res) {
   res.status(204)
 })
 
 // Declare routers
+
 app.use(bodyParser.json())
 
 app.use('/api/v1/', eventRouter)

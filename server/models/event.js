@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const eventSchema = new mongoose.Schema({
 	name: String,
 	description: String,
+	hash: String,
 	createdBy: {
 		name:String,
 		email: String
 	},
-	startTime: Date,
-	endTime: Date,
+	time: String,
 	coords: {
 		lat: Number,
 		lng: Number
