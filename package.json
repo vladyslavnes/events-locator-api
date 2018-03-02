@@ -1,0 +1,33 @@
+{
+  "name": "events-locator-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "nodemon --inspect server/index.js",
+    "test": "standard",
+    "test:fix": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/vladyslavnes/events-locator-api/"
+  },
+  "keywords": [
+    "hybrid app",
+    "events",
+    "maps"
+  ],
+  "author": "Vladyslav Nesterenko",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "standard": "^10.0.2"
+  }
+}
